@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
+// import "./globals.css";
 import { Roboto } from 'next/font/google'
 import { getCssText } from "@/styles";
+import { globalStyles } from "@/styles/global";
+import { Container, Header } from "@/styles/pages/layout";
+import logoImg from '@/assets/ignite_shop_logo.svg'
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -20,6 +22,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  globalStyles();
+
   return (
     <html lang="pt-br">
       <head>
@@ -28,7 +32,12 @@ export default function RootLayout({
       <body
         className={roboto.className}
       >
-        {children}
+        <Container>
+          <Header>
+            <img src={logoImg.src} alt="" />
+          </Header>
+          {children}
+        </Container>
       </body>
     </html>
   );
