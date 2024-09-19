@@ -5,6 +5,7 @@ import { getCssText } from "@/styles";
 import { globalStyles } from "@/styles/global";
 import { Container, Header } from "@/styles/pages/layout";
 import logoImg from '@/assets/ignite_shop_logo.svg'
+import Image from "next/image";
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -34,7 +35,7 @@ export default function RootLayout({
       >
         <Container>
           <Header>
-            <img src={logoImg.src} alt="" />
+            <Image src={logoImg} alt="" />
           </Header>
           {children}
         </Container>
