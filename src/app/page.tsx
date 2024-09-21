@@ -1,66 +1,32 @@
-"use client"
-import { HomeContainer, Product } from "@/styles/pages/home";
-import Image from "next/image";
+// app/(home)/page.tsx (Server Component)
 
-import camiseta1 from '../assets/camisetas/1.png'
-import camiseta2 from '../assets/camisetas/2.png'
-import camiseta3 from '../assets/camisetas/3.png'
+import Stripe from 'stripe'
+import { stripe } from '@/lib/stripe'
+import Home from '../components/home'
 
-import { useKeenSlider } from 'keen-slider/react'
-import 'keen-slider/keen-slider.min.css'
+// Server-side fetching
+async function getProducts() {
+  const response = await stripe.products.list({
+    expand: ['data.default_price'],
+  })
 
-export default function Home() {
-  const [sliderRef] = useKeenSlider({
-    slides: {
-      perView: 3,
-      spacing: 48
+  const products = response.data.map(product => {
+    const price = product.default_price as Stripe.Price
+
+    return {
+      id: product.id,
+      name: product.name,
+      imageUrl: product.images[0],
+      price: price.unit_amount ? price.unit_amount / 100 : 0,
     }
-  });
+  })
 
-  return (
-    <HomeContainer ref={sliderRef} className="keen-slider">
-      <Product className="keen-slider__slide">
-        <Image src={camiseta1} width={520} height={480} alt="" />
-        <footer>
-          <strong>Camiseta X</strong>
-          <span>R$ 79,90</span>
-        </footer>
-      </Product>
-      <Product className="keen-slider__slide">
-        <Image src={camiseta2} width={520} height={480} alt="" />
-        <footer>
-          <strong>Camiseta X</strong>
-          <span>R$ 79,90</span>
-        </footer>
-      </Product>
-      <Product className="keen-slider__slide">
-        <Image src={camiseta3} width={520} height={480} alt="" />
-        <footer>
-          <strong>Camiseta X</strong>
-          <span>R$ 79,90</span>
-        </footer>
-      </Product>
-      <Product className="keen-slider__slide">
-        <Image src={camiseta3} width={520} height={480} alt="" />
-        <footer>
-          <strong>Camiseta X</strong>
-          <span>R$ 79,90</span>
-        </footer>
-      </Product>
-      <Product className="keen-slider__slide">
-        <Image src={camiseta3} width={520} height={480} alt="" />
-        <footer>
-          <strong>Camiseta X</strong>
-          <span>R$ 79,90</span>
-        </footer>
-      </Product>
-      <Product className="keen-slider__slide">
-        <Image src={camiseta3} width={520} height={480} alt="" />
-        <footer>
-          <strong>Camiseta X</strong>
-          <span>R$ 79,90</span>
-        </footer>
-      </Product>
-    </HomeContainer>
-  );
+  return products
+}
+
+export default async function Page() {
+  const products = await getProducts()
+
+  // Render client component and pass products as props
+  return <Home products={products} />
 }
