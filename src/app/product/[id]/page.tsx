@@ -1,5 +1,4 @@
 import { styled } from "@/styles";
-import { useRouter } from "next/router";
 
 const Button = styled('button', {
   backgroundColor: '$green300',
