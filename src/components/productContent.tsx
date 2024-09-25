@@ -1,3 +1,4 @@
+'use client'
 import { ImageContainer, ProductContainer, ProductDetails } from "@/styles/pages/product"
 import Image from "next/image"
 
@@ -7,11 +8,16 @@ interface ProductProps {
     name: string
     imageUrl: string
     price: string
-    description: string | null
+    description: string | null;
+    defaultPriceId: string
   }
 }
 
 export default function ProductContent({ product }: ProductProps) {
+
+  function handleBuyButton() {
+    console.log(product.defaultPriceId);
+  }
 
   return (
     <ProductContainer>
@@ -22,7 +28,7 @@ export default function ProductContent({ product }: ProductProps) {
         <h1>{product.name}</h1>
         <span>{product.price}</span>
         <p>{product.description}</p>
-        <button>
+        <button onClick={handleBuyButton}>
           Comprar agora
         </button>
       </ProductDetails>
