@@ -1,12 +1,12 @@
-import { styled } from "..";
+import { styled } from '..';
 export const ProductContainer = styled('main', {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
   alignItems: 'stretch',
   gap: '4rem',
   maxWidth: 1180,
-  margin: '0 auto'
-})
+  margin: '0 auto',
+});
 export const ImageContainer = styled('div', {
   width: '100%',
   maxWidth: 576,
@@ -19,8 +19,8 @@ export const ImageContainer = styled('div', {
   justifyContent: 'center',
   img: {
     objectFit: 'cover',
-  }
-})
+  },
+});
 export const ProductDetails = styled('div', {
   display: 'flex',
   flexDirection: 'column',
@@ -50,8 +50,14 @@ export const ProductDetails = styled('div', {
     cursor: 'pointer',
     fontWeight: 'bold',
     fontSize: '$md',
-    '&:hover': {
+
+    '&:disabled': {
+      opacity: 0.6,
+      cursor: 'not-allowed',
+    },
+
+    '&:not(:disabled):hover': {
       backgroundColor: '$green300',
-    }
+    },
   },
-})
+});

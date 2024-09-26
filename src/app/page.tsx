@@ -3,6 +3,7 @@
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import Home from '../components/home'
+import { Metadata } from 'next'
 
 // Server-side fetching
 async function getProducts() {
@@ -27,6 +28,12 @@ async function getProducts() {
   return products
 }
 export const revalidate = 100;
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Home | Ignite Shop',
+  };
+}
 
 export default async function Page() {
   const products = await getProducts()
